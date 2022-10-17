@@ -17,7 +17,7 @@ from portray import config, logo, render
 def as_html(
     directory: str = "",
     config_file: str = "pyproject.toml",
-    output_dir: str = "site",
+    output_dir: str = None,
     overwrite: bool = False,
     modules: list = None,
 ) -> None:
@@ -34,12 +34,16 @@ def as_html(
        - *modules*: One or more modules to render reference documentation for
     """
     directory = directory if directory else os.getcwd()
-    render.documentation(
-        project_configuration(directory, config_file, modules=modules, output_dir=output_dir),
-        overwrite=overwrite,
+    project_config = project_configuration(
+        directory,
+        config_file,
+        modules=modules,
+        output_dir=output_dir
     )
+    render.documentation(project_config, overwrite=overwrite)
     print(logo.ascii_art)
-    print(f"Documentation successfully generated into `{os.path.abspath(output_dir)}` !")
+    output_dir = os.path.abspath(project_config['output_dir'])
+    print(f"Documentation successfully generated into `{output_dir}` !")
 
 
 def in_browser(
