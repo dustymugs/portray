@@ -204,7 +204,6 @@ def _nested_docs(directory: str, root_directory: str, config: dict) -> list:
                     nested_dir,
                     root_directory,
                     config,
-                    depth=depth + 1
                 )
             }
             nav.append(dir_nav)  # type: ignore
@@ -222,7 +221,6 @@ def _nested_docs(directory: str, root_directory: str, config: dict) -> list:
         #            nested_dir,
         #            root_directory,
         #            config,
-        #            depth=depth + 1
         #        )
         #    }
         #    nav.append(dir_nav)  # type: ignore
