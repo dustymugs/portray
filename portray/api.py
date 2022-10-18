@@ -18,7 +18,7 @@ def as_html(
     directory: str = "",
     config_file: str = "pyproject.toml",
     output_dir: str = None,
-    overwrite: bool = None,
+    overwrite: bool = False,
     modules: list = None,
 ) -> None:
     """Produces HTML documentation for a Python project placing it into output_dir.
@@ -40,10 +40,6 @@ def as_html(
         modules=modules,
         output_dir=output_dir
     )
-    if overwrite is None:
-        overwrite = project_config['overwrite']
-    if overwrite is None:
-        overwrite = False
     render.documentation(project_config, overwrite=overwrite)
     print(logo.ascii_art)
     output_dir = os.path.abspath(project_config['output_dir'])

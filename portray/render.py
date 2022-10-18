@@ -190,20 +190,42 @@ def _mkdocs_config(config: dict) -> mkdocs_config.Config:
 
 
 def _nested_docs(directory: str, root_directory: str, config: dict) -> list:
+    # markdown files in `directory`
     nav = [
-        _doc(doc, root_directory, config) for doc in sorted(glob(os.path.join(directory, "*.md")))
+        _doc(doc, root_directory, config)
+        for doc in sorted(glob(os.path.join(directory, "*.md")))
     ]
 
     nested_dirs = sorted(glob(os.path.join(directory, "*/")))
     for nested_dir in nested_dirs:
-        if (
-            len(glob(os.path.join(nested_dir, "*.md")) + glob(os.path.join(nested_dir, "**/*.md")))
-            > 0
-        ):
+        if glob(os.path.join(nested_dir, "**/*.md"), recursive=True):
             dir_nav = {
-                _label(nested_dir[:-1], config): _nested_docs(nested_dir, root_directory, config)
+                _label(nested_dir[:-1], config): _nested_docs(
+                    nested_dir,
+                    root_directory,
+                    config,
+                    depth=depth + 1
+                )
             }
             nav.append(dir_nav)  # type: ignore
+
+        #if (
+        #    len(
+        #        # this `directory` child contains markdown files
+        #        glob(os.path.join(nested_dir, "*.md")) +
+        #        # chid directory of this `directory` child contains markdown files
+        #        glob(os.path.join(nested_dir, "**/*.md"))
+        #    ) > 0
+        #):
+        #    dir_nav = {
+        #        _label(nested_dir[:-1], config): _nested_docs(
+        #            nested_dir,
+        #            root_directory,
+        #            config,
+        #            depth=depth + 1
+        #        )
+        #    }
+        #    nav.append(dir_nav)  # type: ignore
 
     return nav
 
