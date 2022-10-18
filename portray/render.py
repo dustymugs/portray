@@ -208,23 +208,6 @@ def _nested_docs(directory: str, root_directory: str, config: dict) -> list:
             }
             nav.append(dir_nav)  # type: ignore
 
-        #if (
-        #    len(
-        #        # this `directory` child contains markdown files
-        #        glob(os.path.join(nested_dir, "*.md")) +
-        #        # chid directory of this `directory` child contains markdown files
-        #        glob(os.path.join(nested_dir, "**/*.md"))
-        #    ) > 0
-        #):
-        #    dir_nav = {
-        #        _label(nested_dir[:-1], config): _nested_docs(
-        #            nested_dir,
-        #            root_directory,
-        #            config,
-        #        )
-        #    }
-        #    nav.append(dir_nav)  # type: ignore
-
     return nav
 
 
