@@ -8,6 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.6"
+numpy = "<2.0.0"
 hug = ">=2.6"
 mkdocs = "~1.2"
 pdocs = "^1.1.1"
